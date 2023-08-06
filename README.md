@@ -26,7 +26,7 @@ An "aircraft management" type program. The program loads some data describing a 
 ## Lessons Learned
 
 
-This was our first project with enough functionality to have us start thinking about project structure. In particular, this project features two major classes: JetsApp and AirField. The data objects, the jets, are organized into a class hierarchy and constitute the rest of the classes in the program, residing in entities package.
+This was our first project with enough functionality to have us start thinking about project structure. In particular, this project features two major classes: JetsApp and AirField. The data objects, the Jets, are organized into a class hierarchy and constitute the rest of the classes in the program, residing in entities package.
 
 I think what I learned in this project is how to have a nice separation of concerns in Java:
 
@@ -53,8 +53,23 @@ Where each node is a part of our program, which does one useful task.  Each conn
 
 Relating this kind of image back to the task of programming, I would always have to think about every part of the program if I went in to change any part. In this example, keeping three connections in mind instead of two. Which doesn't sound that bad, maybe only a little worse. 
 
-What's interesting though, and why I think separation of concerns will be so valuable, is how the number of connections grows in each case. 
+What's interesting though, and why I think separation of concerns will be so valuable, is how the number of connections grows in each case as we increase the number of nodes, or program parts.
 
-The minimum connections case grows linearly, given by `min_connectins(nodes) = nodes - 1`. 
+The minimum connections case grows linearly, given by:
 
-But the maximum connections case grows **quadratically**, given by `max_connections(nodes) = (n*(n-1))/2`. (A nice graph of this growth can be found on the [Wikipedia page for triangle numbers](https://en.wikipedia.org/wiki/Triangular_number).
+~~~
+min_connections(nodes) = nodes - 1
+~~~
+
+But the maximum connections case grows **quadratically**, given by:
+
+~~~
+max_connections(nodes) = (nodes^2 - nodes)/2
+~~~
+
+Even for a small number like 10, we end up with 45 different connections between all the nodes.
+
+So what did I learn?
+
+Separation of concerns was valuable to me when writing this small project, and a little analysis says it may become **very** valuable as my programming tasks get larger. Java's classes and packages give us the tools to make that separation happen.
+
