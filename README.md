@@ -80,9 +80,9 @@ One fun extra note: we can clean up the previous functions a little by relating 
 max_connections = (min_connections)?
 ~~~
 
-Where `?` is the summation analog of the multiplicative factorial operator `!`. The `?` operator is called "terminal" and was introduced by Knuth \[2\].
+Where `?` is the sum `1+2+3...+n`. The `?` operator is called "terminal" and was introduced by Knuth \[2\]. By the way, Knuth has named this operator perfectly. Notice: factorial multiplies all the factors `1*2*...n` and is denoted `!` while terminal sums all the terms `1+2+...n` and is denoted `?`
 
-Then we can answer, "how many connections can we possibly fit into this design?" by simply `max=min?`
+With Knuth's notation we can now answer, "how many connections can we possibly fit into this design?" by simply `max=min?`
 
 
 ## References / Resources
