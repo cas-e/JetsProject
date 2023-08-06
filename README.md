@@ -2,7 +2,7 @@
 
 ## Description
 
-An "aircraft management" type program. The program loads some data describing a small collection of jets to manage. The user is then presented with a menu of options to interact with, and modify, this collection of jets:
+An "aircraft management" type program. The program loads some data from a file, describing a small collection of jets to manage. The user is then presented with a menu of options to interact with, and modify, this collection of jets:
 
 ~~~
 ~~ Welcome to JetsApp!!!!! ~~
@@ -50,33 +50,49 @@ Where each node is a part of our program, which does one useful task.  Each conn
 
 ![maximum graph](images/max_graph.png "maximum graph")
 
-Relating this kind of image back to the task of programming, I have to think about more connections when writing the program. In this example, keeping three connections in mind instead of two. Which doesn't sound that bad, maybe only a little worse. 
+Relating this kind of image back to the task of programming, I would have to think about more connections when writing the program. In this example, keeping three connections in mind instead of two. Which doesn't sound that bad, maybe only a little worse. 
 
-What's interesting though, and why I think separation of concerns will be so valuable, is how the number of connections grows in each case as we increase the number of nodes, or program parts.
+What's interesting though is how the number of connections grows in each case as we increase the number of nodes, or program parts.
 
-The minimum connections case grows linearly, given by:
+The minimum connections case grows linearly, given by the function:
 
 ~~~
 min_connections(nodes) = nodes - 1
 ~~~
 
-But the maximum connections case grows **quadratically**, given by:
+But the maximum connections case grows **quadratically**, given by the function:
 
 ~~~
-max_connections(nodes) = (nodes * (nodes - 1)) / 2
+max_connections(nodes) = (nodes * (nodes - 1)) / 2   // see reference [1]
 ~~~
 
-Even for a small number like 10, we end up with 45 different connections between all the nodes when we connect them maximally.
+Even for a small number of nodes like 10, we end up with 45 different connections when we connect them maximally. That would be a lot of connections to keep in our head as we work!
+ 
+ 
+I already found separation of concerns valuable in this the small case of this project, and it seems like it may become a lot more valuable as the programs I try to write become larger. I think these sorts of organizational benefits were the main lesson I learned in this exercise.
+ 
+ 
+## Extra
 
-So what did I learn?
+One fun extra note: we can clean up the previous functions a little by relating them in a single equation: 
 
-Separation of concerns was valuable to me when writing this small project, and a little analysis says it may become **very** valuable as my programming tasks get larger. Java's classes and packages give us the tools to make that separation happen.
+~~~
+max_connections = (min_connections)?
+~~~
+
+Where `?` is the summation analog of the multiplicative factorial operator `!`. The `?` operator is called "terminal" and was introduced by Knuth \[2\].
+
+Then we can answer, "how many connections can we possibly fit into this design?" by simply `max=min?`
 
 
-## Resources
+## References / Resources
 
-Thanks to [draw.io](https://www.drawio.com/) for the free diagramming tools. 
+\[1\] [Wikipedia: Network Topologies](https://en.wikipedia.org/wiki/Network_topology#fully_connected_network)
 
-And thanks to Wikipedia for the free knowledge about [network topologies](https://en.wikipedia.org/wiki/Network_topology).
+\[2\] Donald E. Knuth *The Art of Computer Programming: Volume 1: Fundamental Algorithms* Section 1.2.5 of the 3rd edition.
+
+And thanks to [draw.io](https://www.drawio.com/) for the free diagramming tools. 
+
+
 
 
