@@ -42,6 +42,8 @@ I think what I learned in this project is how to have a nice separation of conce
 
 Viewed more abstractly, the program structure can be viewed like a little network:
 
-![minimum graph](images/min_graph.svg "minimum graph")
+![minimum graph](images/min_graph.png "minimum graph")
 
+
+Where each node is a part of our program, and each connection represents something like "knows about" or "makes calls to/from" or "communicates with".
 
