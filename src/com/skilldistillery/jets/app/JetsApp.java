@@ -192,7 +192,6 @@ public class JetsApp {
 		return -1;           // signal for invalid
 	}
 	
-	// concrete scanners for positive numbers
 	// the .fooValue() methods are necessary, 
 	// casting won't work because of the -1 invalid signal in getUserNumber
 	private int getUserInt() { 

@@ -40,7 +40,7 @@ I think what I learned in this project is how to have a nice separation of conce
     * Only receives messages from AirField, causing it to invoke its local methods
     * Knows nothing about the JetsApp class
 
-These kinds of "X knows nothing about Y" relationships (or non-relationships, if you like), were very helpful when writing the program. Whenever I needed to add functionality as I implemented the user story, I only had to keep two parts of the program in my head at a time as I worked. Either I was working on the interplay between JetsApp and Airfield, or the interplay between Airfield and Jets. Never both at once. The program structure made the work simple. 
+These kinds of "X knows nothing about Y" relationships (or non-relationships, if you like), were very helpful when writing the program. Whenever I needed to add functionality as I implemented the user story, I only had to keep two parts of the program in my head at a time as I worked. Either I was working on the interplay between JetsApp and Airfield, or the interplay between Airfield and Jets. Never all three at once. The program structure made the work simple. 
 
 Viewed more abstractly, the program structure can be diagramed like a little network:
 
@@ -80,7 +80,7 @@ One fun extra note: we can clean up the previous functions a little by reformula
 max_connections = (min_connections)?
 ~~~
 
-Where `?` is the sum `1+2+3...+n`. The `?` operator is called "terminal" and was introduced by Knuth \[2\], who has named this operator perfectly. Notice: factorial multiplies all the factors `1*2*...*n` and is denoted `!` while terminal adds all the terms `1+2+...+n` and is denoted `?`
+Where `?` is the sum `1+2+3...+n`. The `?` operator is called "termial" and was introduced by Knuth \[2\], who has named this operator perfectly. Notice: factorial multiplies all the factors `1*2*...*n` and is denoted `!` while termial adds all the terms `1+2+...+n` and is denoted `?`
 
 With Knuth's notation we can now answer, "how many connections can we possibly fit into this design?" by simply stating `max=min?`
 
