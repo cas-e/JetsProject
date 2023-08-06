@@ -26,7 +26,7 @@ An "aircraft management" type program. The program loads some data from a file, 
 ## Lessons Learned
 
 
-This was our first project with enough functionality to have us start thinking about project structure. In particular, this project features two major classes: JetsApp and AirField. The data objects, the Jets, are organized into a class hierarchy and constitute the rest of the classes in the program. They reside on their own in the entities package.
+This was our first project with enough functionality to have us start thinking about project structure. In particular, this project features two major classes: JetsApp and AirField. The data objects, the Jets, are organized into a class hierarchy and constitute the rest of the classes in the program. They reside in the entities package.
 
 I think what I learned in this project is how to have a nice separation of concerns in Java:
 
@@ -40,9 +40,9 @@ I think what I learned in this project is how to have a nice separation of conce
     * Only receives messages from AirField, causing it to invoke its local methods
     * Knows nothing about the JetsApp class
 
-These kinds of "X knows nothing about Y" relationships (or non-relationships, if you like), were very helpful when writing the program. Whenever I needed to add functionality as I implemented the user story, I only had to keep two parts of the program in my head at a time as I worked. The program structure made the work simple. 
+These kinds of "X knows nothing about Y" relationships (or non-relationships, if you like), were very helpful when writing the program. Whenever I needed to add functionality as I implemented the user story, I only had to keep two parts of the program in my head at a time as I worked. Either I was working on the interplay between JetsApp and Airfield, or the interplay between Airfield and Jets. Never both at once. The program structure made the work simple. 
 
-Viewed more abstractly, the program structure can be viewed like a little network:
+Viewed more abstractly, the program structure can be diagramed like a little network:
 
 ![minimum graph](images/min_graph.png "minimum graph")
 
@@ -69,20 +69,20 @@ max_connections(nodes) = (nodes * (nodes - 1)) / 2   // see reference [1]
 Even for a small number of nodes like 10, we end up with 45 different connections when we connect them maximally. That would be a lot of connections to keep in our head as we work!
  
  
-I already found separation of concerns valuable in this the small case of this project, and it seems like it may become a lot more valuable as the programs I try to write become larger. I think these sorts of organizational benefits were the main lesson I learned in this exercise.
+I already found separation of concerns valuable in this the small case of this project, and it seems like it may become a lot more valuable as the programs I try to write become larger, at least according to the above analysis. I think these sorts of organizational benefits were the main lesson I learned in this exercise.
  
  
 ## Extra
 
-One fun extra note: we can clean up the previous functions a little by relating them in a single equation: 
+One fun extra note: we can clean up the previous functions a little by reformulating them like so: 
 
 ~~~
 max_connections = (min_connections)?
 ~~~
 
-Where `?` is the sum `1+2+3...+n`. The `?` operator is called "terminal" and was introduced by Knuth \[2\], who has named this operator perfectly. Notice: factorial multiplies all the factors `1*2*...n` and is denoted `!` while terminal adds all the terms `1+2+...n` and is denoted `?`
+Where `?` is the sum `1+2+3...+n`. The `?` operator is called "terminal" and was introduced by Knuth \[2\], who has named this operator perfectly. Notice: factorial multiplies all the factors `1*2*...*n` and is denoted `!` while terminal adds all the terms `1+2+...+n` and is denoted `?`
 
-With Knuth's notation we can now answer, "how many connections can we possibly fit into this design?" by simply `max=min?`
+With Knuth's notation we can now answer, "how many connections can we possibly fit into this design?" by simply stating `max=min?`
 
 
 ## References / Resources
