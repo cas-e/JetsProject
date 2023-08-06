@@ -63,7 +63,7 @@ min_connections(nodes) = nodes - 1
 But the maximum connections case grows **quadratically**, given by:
 
 ~~~
-max_connections(nodes) = (nodes^2 - nodes)/2
+max_connections(nodes) = (nodes * (nodes - 1)) / 2
 ~~~
 
 Even for a small number like 10, we end up with 45 different connections between all the nodes when we connect them maximally.
