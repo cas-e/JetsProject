@@ -73,3 +73,11 @@ So what did I learn?
 
 Separation of concerns was valuable to me when writing this small project, and a little analysis says it may become **very** valuable as my programming tasks get larger. Java's classes and packages give us the tools to make that separation happen.
 
+
+## Resources
+
+Thanks to [draw.io](https://www.drawio.com/) for the free diagramming tools. 
+
+And thanks to Wikipedia for the free knowledge about [network topologies](https://en.wikipedia.org/wiki/Network_topology).
+
+
