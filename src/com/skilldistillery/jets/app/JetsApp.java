@@ -16,12 +16,13 @@ public class JetsApp {
 	private final boolean doneLooping = false;
 
 	// some values to obtain from the user
-	double speed;
-	int range;
-	long price;
+	private double speed;
+	private int range;
+	private long price;
 	
 	
 	public static void main(String[] args) {
+		
 		JetsApp app = new JetsApp();
 		app.run();
 	}
@@ -97,13 +98,20 @@ public class JetsApp {
 		System.out.println("Please enter the model name: ");
 		String model = scan.nextLine();
 		
+		// why so many loops? 
+		// we never let the user see "error dump & exit" because of the scanner
+		// instead we just keep looping until valid input is obtained.
 		userLoop(this::getSpeed);
 		userLoop(this::getRange);
 		userLoop(this::getPrice);
 		
 		// if we made it this far, all the inputs have been validated
 		airfield.addNewUserJet(type, model, speed, range, price);
-		System.out.println("Jet Successfully added to fleet!!");
+		
+		// in the unix tradition, a tool's success is reported with silence
+		// however, most find this disturbing, therefore:
+		System.out.println("\nJet Successfully added to fleet!!");
+		
 		return doneLooping;
 	}
 	
@@ -131,7 +139,7 @@ public class JetsApp {
 		System.out.println("Please enter the price of the jet in question: (USD is assumed)");
 		price = getUserLong();
 		if (price <= 0) {
-			System.out.println("Price must be greater than zero! No free jets in this world, friend.\n");
+			System.out.println("Price must be a whole number greater than zero.\n");
 			return keepLooping;
 		}
 		return doneLooping;
@@ -139,10 +147,16 @@ public class JetsApp {
 	
 	private boolean removeJet() {
 		System.out.println("~~ Jet Removal Screen ~~");
-		airfield.listJets();
-		System.out.println("\nPlease enter the number associated with the Jet to be removed: ");
 		
 		int max = airfield.numberOfJets();
+		
+		// edge case!
+		if (max == 0) {  
+			System.out.println("Sorry, no more jets to remove. The airfield is empty!");
+			return doneLooping;
+		}
+		airfield.listJets();
+		System.out.println("\nPlease enter the number associated with the Jet to be removed: ");
 		int rmv = getUserInt();
 		
 		if (rmv < 1 || rmv > max) {
@@ -151,7 +165,7 @@ public class JetsApp {
 		}
 		
 		airfield.retireJet(rmv);
-		System.out.println("Jet successfully removed!");
+		System.out.println("\nJet successfully removed!");
 		return doneLooping;
 	}
 	
@@ -179,13 +193,15 @@ public class JetsApp {
 	}
 	
 	// concrete scanners for positive numbers
+	// the .fooValue() methods are necessary, 
+	// casting won't work because of the -1 invalid signal in getUserNumber
 	private int getUserInt() { 
-		return (int) getUserNumber(scan::hasNextInt, scan::nextInt); 
+		return getUserNumber(scan::hasNextInt, scan::nextInt).intValue(); 
 	}
 	private long getUserLong() { 
-		return (long) getUserNumber(scan::hasNextLong, scan::nextLong); 
+		return getUserNumber(scan::hasNextLong, scan::nextLong).longValue(); 
 	}
 	private double getUserDouble() {
-		return (double) getUserNumber(scan::hasNextDouble, scan::nextDouble);
+		return getUserNumber(scan::hasNextDouble, scan::nextDouble).doubleValue();
 	}
 }
