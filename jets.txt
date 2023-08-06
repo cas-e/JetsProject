@@ -1,0 +1,6 @@
+PassengerJet,GulfStream,500,5000,3000000
+PassengerJet,Embraer,550,5800,3500000
+FighterJet,F-35,1800,800,177000000
+FighterJet,F-22,1500,970,130000000
+CargoPlane,Antonov,560,4900,77000000
+CargoPlane,Lockheed,580,5100,84000000

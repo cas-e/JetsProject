@@ -1,0 +1,191 @@
+package com.skilldistillery.jets.app;
+
+import java.util.Scanner;
+import java.util.function.BooleanSupplier;
+import java.util.function.Supplier;
+
+import com.skilldistillery.jets.entities.AirField;
+
+
+public class JetsApp {
+	private AirField airfield;
+	private Scanner scan;
+
+	// for more readability in user interaction loops
+	private final boolean keepLooping = true;
+	private final boolean doneLooping = false;
+
+	// some values to obtain from the user
+	double speed;
+	int range;
+	long price;
+	
+	
+	public static void main(String[] args) {
+		JetsApp app = new JetsApp();
+		app.run();
+	}
+
+	private void run() {
+		System.out.println("~~ Welcome to JetsApp!!!!! ~~");
+
+		airfield = new AirField("jets.txt");
+		scan = new Scanner(System.in);
+
+		// the userLoop method just calls another method in a "do...while" loop
+		// in this case, we want to keep calling doMenu() until the user quits
+		userLoop(this::doMenu);
+
+		scan.close();
+		System.out.println("\n~~ Thank you for using JetsApp! Goodbye. ~~");
+	}
+	
+	private void displayChoices() {
+		System.out.println("\n~~ Please enter an option ~~\n");
+		System.out.println("1) List Fleet                     5) Load All Cargo Jets");
+		System.out.println("2) Fly All The Jets!              6) DOGFIGHT!!!");
+		System.out.println("3) List Fastest Jet(s)            7) Add Jet to Fleet");
+		System.out.println("4) List Jet(s) with Longest Range 8) Remove Jet from Fleet");
+		System.out.println("\n~~  or enter (9) to quit  ~~");
+	}
+
+	public void displayUnrecognized() {
+		System.out.println("Oops! We didn't understand that.");
+	}
+	
+	private boolean doMenu() {
+		displayChoices();
+		
+		// getUserInt() returns -1 for unrecognized input,
+		// which falls through these cases, causing the loop to continue
+		int userChose = getUserInt();
+
+		switch (userChose) {
+		case 1: airfield.listFleet();        break;
+		case 2: airfield.flyAllJets();       break;
+		case 3: airfield.listFastestJets();  break;
+		case 4: airfield.listRangiestJets(); break;
+		case 5: airfield.loadAllCargoJets(); break;
+		case 6: airfield.dogfightFighters(); break;
+		case 7: userLoop(this::getJetInfo);  break;
+		case 8: userLoop(this::removeJet);   break;
+		
+		case 9 : 
+			return doneLooping;
+			
+		default: 
+			displayUnrecognized();
+		}
+		
+		return keepLooping;
+	}
+
+	private boolean getJetInfo() {
+		System.out.println("~~ Entering Data for a New Jet ~~\n");
+	
+		System.out.println("Please Enter a Number for the Jet Type: ");
+		System.out.println("1) Passenger Jet");
+		System.out.println("2) Fighter Jet");
+		System.out.println("3) Cargo Plane");
+		
+		int type = getUserInt();
+		if (type < 1 || type > 3) {
+			displayUnrecognized();
+			return keepLooping;
+		}
+		
+		System.out.println("Please enter the model name: ");
+		String model = scan.nextLine();
+		
+		userLoop(this::getSpeed);
+		userLoop(this::getRange);
+		userLoop(this::getPrice);
+		
+		// if we made it this far, all the inputs have been validated
+		airfield.addNewUserJet(type, model, speed, range, price);
+		System.out.println("Jet Successfully added to fleet!!");
+		return doneLooping;
+	}
+	
+	private boolean getSpeed() {
+		System.out.println("Please enter a decimal number for the speed: (MPH is assumed)");
+		speed = getUserDouble();
+		if (speed <= 0) {
+			System.out.println("Speeds must be greater than zero in the form 123.45\n");
+			return keepLooping;
+		}
+		return doneLooping;
+	}
+	
+	private boolean getRange() {
+		System.out.println("Please enter an integral value for the range: (mile units are assumed)");
+		range = getUserInt();
+		if (range <= 0) {
+			System.out.println("Range must be greater that zero in the form 1234\n");
+			return keepLooping;
+		}
+		return doneLooping;
+	}
+	
+	private boolean getPrice() {
+		System.out.println("Please enter the price of the jet in question: (USD is assumed)");
+		price = getUserLong();
+		if (price <= 0) {
+			System.out.println("Price must be greater than zero! No free jets in this world, friend.\n");
+			return keepLooping;
+		}
+		return doneLooping;
+	}
+	
+	private boolean removeJet() {
+		System.out.println("~~ Jet Removal Screen ~~");
+		airfield.listJets();
+		System.out.println("\nPlease enter the number associated with the Jet to be removed: ");
+		
+		int max = airfield.numberOfJets();
+		int rmv = getUserInt();
+		
+		if (rmv < 1 || rmv > max) {
+			System.out.println("Oops! That number does not correspond to a jet. Please try again.");
+			return keepLooping;
+		}
+		
+		airfield.retireJet(rmv);
+		System.out.println("Jet successfully removed!");
+		return doneLooping;
+	}
+	
+	/*
+	 * Helpers
+	 */
+	
+	// general pattern for looping
+	private void userLoop(BooleanSupplier looper) {
+		boolean moreLoops;
+		do {
+			moreLoops = looper.getAsBoolean();
+		} while (moreLoops);
+	}
+	
+	// general pattern for scanning positive numbers
+	private Number getUserNumber(BooleanSupplier hasNext, Supplier<Number> next) {
+		if (hasNext.getAsBoolean()) {
+			Number n = next.get();
+			scan.nextLine(); // clear out extra inputs
+			return n;
+		}
+		scan.nextLine();     // clear out result of wrong type
+		return -1;           // signal for invalid
+	}
+	
+	// concrete scanners for positive numbers
+	private int getUserInt() { 
+		return (int) getUserNumber(scan::hasNextInt, scan::nextInt); 
+	}
+	private long getUserLong() { 
+		return (long) getUserNumber(scan::hasNextLong, scan::nextLong); 
+	}
+	private double getUserDouble() {
+		return (double) getUserNumber(scan::hasNextDouble, scan::nextDouble);
+	}
+}
