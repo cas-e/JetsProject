@@ -77,7 +77,7 @@ I already found separation of concerns valuable in this the small case of this p
 One fun extra note: we can clean up the previous functions a little by reformulating them like so: 
 
 ~~~
-max_connections = (min_connections)?
+max_connections(n) = (min_connections(n))? = (n-1)?
 ~~~
 
 Where `?` is the sum `1+2+3...+n`. The `?` operator is called "termial" and was introduced by Knuth \[2\], who has named this operator perfectly. Notice: factorial multiplies all the factors `1*2*...*n` and is denoted `!` while termial adds all the terms `1+2+...+n` and is denoted `?`
